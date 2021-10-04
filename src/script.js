@@ -1,13 +1,14 @@
 import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import * as dat from 'dat.gui'
+//import * as dat from 'dat.gui'
 
 /**
  * Base
  */
-// Debug
-const gui = new dat.GUI()
+// Debug Datgui
+//const gui = new dat.GUI()
+
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -15,6 +16,14 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
+/**
+ * Textures
+ */
+ const textureLoader = new THREE.TextureLoader()
+ const matcapTexture = textureLoader.load('/textures/matcaps/8.png')
+ console.log(matcapTexture)
+ const textMaterial = new THREE.MeshMatcapMaterial()
+ textMaterial.matcap = matcapTexture
 /**
  * Objects / SPHERES
  */
@@ -24,12 +33,13 @@ const object11 = new THREE.Mesh(
     new THREE.SphereGeometry(0.5, 16, 16),
     new THREE.MeshBasicMaterial({ color: '#ff0000' })
 )
+
 object11.position.x = - 2
 object11.position.y = 2
 
 const object12 = new THREE.Mesh(
     new THREE.SphereGeometry(0.5, 16, 16),
-    new THREE.MeshBasicMaterial({ color: '#ff0000' })
+    new THREE.MeshBasicMaterial({  })
 )
 
 object12.position.y = 2
@@ -149,6 +159,33 @@ window.addEventListener('resize', () =>
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
+/**
+ * Full Screen
+ */
+ window.addEventListener('dblclick', ()=>{
+    const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
+   
+    if(!fullscreenElement){
+        if(canvas.requestFullscreen)
+        {
+            canvas.requestFullscreen()
+        }
+        else if(canvas.webkitrequestFullscreen){
+            canvas.webkitFullscreen()
+        }
+   }
+   else{
+    if(canvas.requestFullscreen)
+    {
+        document.exitFullscreen()
+    }
+    else
+    {
+        document.webkitexitFullscreen() 
+    }
+   }
+})
+
 
 /**
  * Camera
@@ -253,9 +290,13 @@ const tick = () =>
 
     for(const object of objectsToTest){
         object.material.color.set('#ffffff')
+        //object.matcap = matcapTexture
+        
+        
     }
     for(const intersect of intersects){
         intersect.object.material.color.set('#0000ff')
+        
     }
 
     if(intersects.length){
@@ -270,28 +311,6 @@ const tick = () =>
         }
         currentIntersect = null
     }
-
-
-
-
-    //Cast a ray when touch the vector
-    /* const rayOrigin = new THREE.Vector3(-3,0,0)
-    const rayDirection = new THREE.Vector3(1,0,0)
-    rayDirection.normalize()
-
-    raycaster.set(rayOrigin, rayDirection)
-
-    const objectsToTest= [object1, object2, object3]
-    const intersects = raycaster.intersectObjects(objectsToTest)
-    //console.log(intersects.length)
-
-    for(const object of objectsToTest){
-      object.material.color.set('#ff0000')
-    }
-
-    for(const intersect of intersects){
-        intersect.object.material.color.set('#0000ff')
-    } */
 
 
 
