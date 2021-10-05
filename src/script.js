@@ -216,9 +216,10 @@ window.addEventListener('mousemove',(event) =>
 /*     mouse.x = event.clientX / sizes.width * 3 -1.5
     mouse.y = -(event.clientY / sizes.height * 3 - 1.5)
     //positions */
+    //console.log(mouse.x +","+mouse.y)
     mouse.x = event.clientX / sizes.width * 2 - 1
     mouse.y = - (event.clientY / sizes.height) * 2 + 1
-    //console.log(mouse.x +","+mouse.y)
+    
 })
 
 // important to know what object is clicked
@@ -228,6 +229,10 @@ window.addEventListener('click', () =>{
         switch(currentIntersect.object){
             case object11:
                 console.log('Object11 clicked')
+                const object1clicked = 1
+                if(object1clicked === 1){
+                    console.log("se puede cambiar color")
+                }
                 break
             case object12:
                 console.log('Object12 clicked')
@@ -287,14 +292,15 @@ const tick = () =>
 
     for(const object of objectsToTest){
        object.material.color.set('#f4f4f4')
-       //object.material.map = matcapSphereTexture
        object.material.wireframe = true
+       //object.material.map = matcapSphereTexture
     }
     for(const intersect of intersects){
-        intersect.object.material.color.set('#bdecb6')
+        //intersect.object.material.color.set('#bdecb6')
+        intersect.object.material.wireframe = false
         //intersect.object.material.map = matcapTexture
         //intersect.object.material.flatShading = true
-        intersect.object.material.wireframe = false
+       
     }
 
     if(intersects.length){
@@ -321,5 +327,4 @@ const tick = () =>
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
 }
-
 tick()
