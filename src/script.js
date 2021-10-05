@@ -21,74 +21,67 @@ const scene = new THREE.Scene()
  */
  const textureLoader = new THREE.TextureLoader()
  const matcapTexture = textureLoader.load('/textures/matcaps/8.png')
- console.log(matcapTexture)
- const textMaterial = new THREE.MeshMatcapMaterial()
- textMaterial.matcap = matcapTexture
+ const matcapSphereTexture = textureLoader.load('/textures/matcaps/2.png')
+
+ const material = new THREE.MeshNormalMaterial()
+
+
 /**
  * Objects / SPHERES
  */
 
 //First Row
-const object11 = new THREE.Mesh(
-    new THREE.SphereGeometry(0.5, 16, 16),
-    new THREE.MeshBasicMaterial({ color: '#ff0000' })
-)
 
+const object11 = new THREE.Mesh(
+    new THREE.SphereGeometry(0.5, 16, 16)
+)
 object11.position.x = - 2
 object11.position.y = 2
 
 const object12 = new THREE.Mesh(
-    new THREE.SphereGeometry(0.5, 16, 16),
-    new THREE.MeshBasicMaterial({  })
+    new THREE.SphereGeometry(0.5, 16, 16)
 )
 
 object12.position.y = 2
 
 const object13 = new THREE.Mesh(
-    new THREE.SphereGeometry(0.5, 16, 16),
-    new THREE.MeshBasicMaterial({ color: '#ff0000' })
+    new THREE.SphereGeometry(0.5, 16, 16)
 )
 object13.position.x = 2
 object13.position.y = 2
 
 //Second row
 const object21 = new THREE.Mesh(
-    new THREE.SphereGeometry(0.5, 16, 16),
-    new THREE.MeshBasicMaterial({ color: '#ff0000' })
+    new THREE.SphereGeometry(0.5, 16, 16)
 )
 object21.position.x = - 2
 
 const object22 = new THREE.Mesh(
-    new THREE.SphereGeometry(0.5, 16, 16),
-    new THREE.MeshBasicMaterial({ color: '#ff0000' })
+    new THREE.SphereGeometry(0.5, 16, 16)
 )
 
 
 const object23 = new THREE.Mesh(
-    new THREE.SphereGeometry(0.5, 16, 16),
-    new THREE.MeshBasicMaterial({ color: '#ff0000' })
+    new THREE.SphereGeometry(0.5, 16, 16)
 )
 object23.position.x = 2
 
 //third row
 
 const object31 = new THREE.Mesh(
-    new THREE.SphereGeometry(0.5, 16, 16),
-    new THREE.MeshBasicMaterial({ color: '#ff0000' })
+    new THREE.SphereGeometry(0.5, 16, 16)
 )
 object31.position.x = - 2
 object31.position.y = -2
 
 const object32 = new THREE.Mesh(
-    new THREE.SphereGeometry(0.5, 16, 16),
-    new THREE.MeshBasicMaterial({ color: '#ff0000' })
+    new THREE.SphereGeometry(0.5, 16, 16)
 )
 
 object32.position.y = -2
 
 const object33 = new THREE.Mesh(
-    new THREE.SphereGeometry(0.5, 16, 16),
-    new THREE.MeshBasicMaterial({ color: '#ff0000' })
+    new THREE.SphereGeometry(0.5, 16, 16)
 )
 object33.position.x = 2
 object33.position.y = -2
@@ -105,26 +98,26 @@ scene.add(object11, object12, object13,
 //Vertical 
 const vLine1 = new THREE.Mesh(
     new THREE.BoxGeometry( 0.2, 5, 0.2 ),
-    new THREE.MeshBasicMaterial({ color: '#00ff00' })
+    new THREE.MeshMatcapMaterial({ matcap: matcapTexture })
 )
 vLine1.position.x = 1
 
 const vLine2 = new THREE.Mesh(
     new THREE.BoxGeometry( 0.2, 5, 0.2 ),
-    new THREE.MeshBasicMaterial({ color: '#00ff00' })
+    new THREE.MeshMatcapMaterial({ matcap: matcapTexture })
 )
 vLine2.position.x = -1
 
 //Horizon
 const hLine1 = new THREE.Mesh(
     new THREE.BoxGeometry( 5, 0.2, 0.2 ),
-    new THREE.MeshBasicMaterial({ color: '#00ff00' })
+    new THREE.MeshMatcapMaterial({ matcap: matcapTexture })
 )
 hLine1.position.y = 1
 
 const hLine2 = new THREE.Mesh(
     new THREE.BoxGeometry( 5, 0.2, 0.2 ),
-    new THREE.MeshBasicMaterial({ color: '#00ff00' })
+    new THREE.MeshMatcapMaterial({ matcap: matcapTexture })
 )
 hLine2.position.y = -1
 
@@ -162,29 +155,33 @@ window.addEventListener('resize', () =>
 /**
  * Full Screen
  */
- window.addEventListener('dblclick', ()=>{
-    const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
-   
-    if(!fullscreenElement){
-        if(canvas.requestFullscreen)
-        {
-            canvas.requestFullscreen()
-        }
-        else if(canvas.webkitrequestFullscreen){
-            canvas.webkitFullscreen()
-        }
-   }
-   else{
-    if(canvas.requestFullscreen)
-    {
-        document.exitFullscreen()
-    }
-    else
-    {
-        document.webkitexitFullscreen() 
-    }
-   }
-})
+ window.addEventListener('dblclick', () =>
+ {
+     const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
+ 
+     if(!fullscreenElement)
+     {
+         if(canvas.requestFullscreen)
+         {
+             canvas.requestFullscreen()
+         }
+         else if(canvas.webkitRequestFullscreen)
+         {
+             canvas.webkitRequestFullscreen()
+         }
+     }
+     else
+     {
+         if(document.exitFullscreen)
+         {
+             document.exitFullscreen()
+         }
+         else if(document.webkitExitFullscreen)
+         {
+             document.webkitExitFullscreen()
+         }
+     }
+ })
 
 
 /**
@@ -289,14 +286,15 @@ const tick = () =>
     const intersects = raycaster.intersectObjects(objectsToTest)
 
     for(const object of objectsToTest){
-        object.material.color.set('#ffffff')
-        //object.matcap = matcapTexture
-        
-        
+       object.material.color.set('#f4f4f4')
+       //object.material.map = matcapSphereTexture
+       object.material.wireframe = true
     }
     for(const intersect of intersects){
-        intersect.object.material.color.set('#0000ff')
-        
+        intersect.object.material.color.set('#bdecb6')
+        //intersect.object.material.map = matcapTexture
+        //intersect.object.material.flatShading = true
+        intersect.object.material.wireframe = false
     }
 
     if(intersects.length){
