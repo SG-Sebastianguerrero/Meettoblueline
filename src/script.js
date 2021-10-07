@@ -222,82 +222,36 @@ window.addEventListener('mousemove',(event) =>
     
 })
 
-// important to know what object is clicked
-window.addEventListener('click', () =>{
-    if(currentIntersect){
 
-        switch(currentIntersect.object){
-            case object11:
-                console.log('Object11 clicked')
-                const object1clicked = 1
-                if(object1clicked === 1){
-                    console.log("se puede cambiar color")
-                }
-                break
-            case object12:
-                console.log('Object12 clicked')
-                break
-
-            case object13:
-                console.log('Object13 clicked')
-                break
-
-
-            case object21:
-                console.log('Object21 clicked')
-                break
-            case object22:
-                console.log('Object22 clicked')
-                break
-            case object23:
-                console.log('Object23 clicked')
-                break
-
-
-            case object31:
-                console.log('Object31 clicked')
-                break
-            case object32:
-                console.log('Object32 clicked')
-                break
-            case object33:
-                console.log('Object33 clicked')
-                break
-
-        }
-
-
-
-    }
-})
 
 
 /**
- * Animate
+ * Animations
  */
 const clock = new THREE.Clock()
 
-//important
 let currentIntersect = null
+
+const objectsToTest= [object11, object12, object13,
+                      object21, object22, object23,
+                      object31, object32, object33]
 
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
     // Important direction of raycaster
     raycaster.setFromCamera(mouse,camera)
-    const objectsToTest= [object11, object12, object13,
-                          object21, object22, object23,
-                          object31, object32, object33]
+
     const intersects = raycaster.intersectObjects(objectsToTest)
 
     for(const object of objectsToTest){
-       object.material.color.set('#f4f4f4')
+       //object.material.color.set('#f4f4f4')
        object.material.wireframe = true
        //object.material.map = matcapSphereTexture
     }
     for(const intersect of intersects){
         //intersect.object.material.color.set('#bdecb6')
-        intersect.object.material.wireframe = false
+        //intersect.object.material.wireframe = false
         //intersect.object.material.map = matcapTexture
         //intersect.object.material.flatShading = true
        
@@ -328,3 +282,110 @@ const tick = () =>
     window.requestAnimationFrame(tick)
 }
 tick()
+
+
+function ComputerMove(objectClicked)
+{
+    objectClicked.material.color.set('#0000ff')
+    objectClicked.material.wireframe = false
+}
+ComputerMove(object11)
+ComputerMove(object12)
+ComputerMove(object13)
+
+function UserMove(objectClicked)
+{
+    objectClicked.material.color.set('#00ff00')
+    objectClicked.material.wireframe = false
+    console.log(""+objectClicked)
+}
+
+window.addEventListener('click', () =>{
+    if(currentIntersect){
+
+        switch(currentIntersect.object){
+
+            //First Row
+            case object11:
+                console.log('Object11 clicked')
+                UserMove(object11)
+                break
+            case object12:
+                console.log('Object12 clicked')
+                UserMove(object12)
+                break
+            case object13:
+                console.log('Object13 clicked')
+                UserMove(object13)
+                break
+
+            //Second Row
+            case object21:
+                console.log('Object21 clicked')
+                UserMove(object21)
+                break
+            case object22:
+                console.log('Object22 clicked')
+                UserMove(object22)
+                break
+            case object23:
+                console.log('Object23 clicked')
+                UserMove(object23)
+                break
+
+            //Third Row
+            case object31:
+                console.log('Object31 clicked')
+                UserMove(object31)
+                break
+            case object32:
+                console.log('Object32 clicked')
+                UserMove(object32)
+                break
+            case object33:
+                console.log('Object33 clicked')
+                UserMove(object33)
+                break
+
+            //If does not choose anything
+            default:
+                alert("error during compilation")
+        }
+
+    }
+})
+
+
+/* if turns are necesary
+var nombre = "ss"
+function userMove(){
+ console.log("han pasado 5 segundos")
+ var nombre = ""
+}
+
+do {
+    console.log(nombre)
+    //var nombre = prompt("Escribe tu turno");
+   
+} while (nombre === ""); */
+
+/**
+ * Game Logic
+ */
+
+let i = 0;
+ 
+ do {
+   i = i + 1;
+    if( i % 2 ){
+        console.log("Computer turn:"+i)
+    }
+    else{
+        console.log("User turn:"+i)
+        // important to know what object is clicked
+
+    }
+ } while (i < 9);
+ 
+
+
