@@ -283,22 +283,73 @@ const tick = () =>
 }
 tick()
 
+/**
+ * Game Logic
+ */
+//COMPUTER MOVEMENT 
 
-function ComputerMove(objectClicked)
-{
-    objectClicked.material.color.set('#0000ff')
-    objectClicked.material.wireframe = false
-}
-ComputerMove(object11)
-ComputerMove(object12)
-ComputerMove(object13)
+var valuesVector = []
+var counter = 0, isrepeated = 0
+var name
 
-function UserMove(objectClicked)
-{
-    objectClicked.material.color.set('#00ff00')
-    objectClicked.material.wireframe = false
-    console.log(""+objectClicked)
+
+function Move(user, objectClicked, name){
+    counter++
+    //console.log("counter:"+counter)
+
+    if(user === "computer"){
+        isrepeated = 0
+        for(var i = 1; i<= counter; i++){
+            if(name === valuesVector[i]){
+                console.log("try with another one")
+                isrepeated = 1
+                //console.log(counter+"_"+name+"_"+valuesVector[i])
+                break;
+            }
+        }
+        if(isrepeated === 0){
+            valuesVector[counter] = ""+name
+            objectClicked.material.color.set('#0000ff')
+            objectClicked.material.wireframe = false
+            //console.log("added")
+            //console.log(""+objectClicked+""+valuesVector[i])
+        }
+
+        // Prove 
+        /*for(var i =1;i<=counter;i++){
+            console.log("index: "+i+"value: "+valuesVector[i])
+        } */
+    }
+
+    if(user === "user"){
+        isrepeated = 0
+        for(var i = 1; i<= 10; i++){
+            if(name === valuesVector[i]){
+                isrepeated = 1
+                console.log("try with another one")
+                //console.log(counter+"_"+name+"_"+valuesVector[i])
+                break;
+            }
+        }
+        if(isrepeated === 0){
+            valuesVector[counter] = ""+name
+            console.log("added"+isrepeated)
+            objectClicked.material.color.set('#00ff00')
+            objectClicked.material.wireframe = false
+            //console.log(""+objectClicked+""+valuesVector[i])
+        }
+
+        // Prove 
+        /* for(var i =1;i<=counter;i++){
+            console.log("index: "+i+"value: "+valuesVector[i])
+        } */
+    }
 }
+
+Move("computer",object11,"object11")
+Move("computer",object22,"object22")
+Move("computer",object33,"object33")
+
 
 window.addEventListener('click', () =>{
     if(currentIntersect){
@@ -308,43 +359,43 @@ window.addEventListener('click', () =>{
             //First Row
             case object11:
                 console.log('Object11 clicked')
-                UserMove(object11)
+                Move("user",object11,"object11")
                 break
             case object12:
                 console.log('Object12 clicked')
-                UserMove(object12)
+                Move("user",object12,"object12")
                 break
             case object13:
                 console.log('Object13 clicked')
-                UserMove(object13)
+                Move("user",object13,"object13")
                 break
 
             //Second Row
             case object21:
                 console.log('Object21 clicked')
-                UserMove(object21)
+                Move("user",object21,"object21")
                 break
             case object22:
                 console.log('Object22 clicked')
-                UserMove(object22)
+                Move("user",object22,"object22")
                 break
             case object23:
                 console.log('Object23 clicked')
-                UserMove(object23)
+                Move("user",object23,"object23")
                 break
 
             //Third Row
             case object31:
                 console.log('Object31 clicked')
-                UserMove(object31)
+                Move("user",object31,"object31")
                 break
             case object32:
                 console.log('Object32 clicked')
-                UserMove(object32)
+                Move("user",object32,"object32")
                 break
             case object33:
                 console.log('Object33 clicked')
-                UserMove(object33)
+                Move("user",object33,"object33")
                 break
 
             //If does not choose anything
@@ -355,25 +406,14 @@ window.addEventListener('click', () =>{
     }
 })
 
-
 /* if turns are necesary
 var nombre = "ss"
 function userMove(){
  console.log("han pasado 5 segundos")
  var nombre = ""
 }
-
-do {
-    console.log(nombre)
-    //var nombre = prompt("Escribe tu turno");
-   
-} while (nombre === ""); */
-
-/**
- * Game Logic
- */
-
-let i = 0;
+//Turns conditional
+/* let i = 0;
  
  do {
    i = i + 1;
@@ -385,7 +425,7 @@ let i = 0;
         // important to know what object is clicked
 
     }
- } while (i < 9);
+ } while (i < 9); */
  
 
 
