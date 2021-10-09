@@ -286,7 +286,40 @@ tick()
 /**
  * Game Logic
  */
-//COMPUTER MOVEMENT 
+// Movements administrator 
+var counterAdmin = 1
+var userCounter = 0, computerCounter = 0, validator = 0
+function movementAdmin(people){
+    validator = 0
+    //return 0 or 1 if aprove or not the add
+    if(people==="computer" & counterAdmin % 2 !=0){
+        computerCounter++
+        validator = 1
+        console.log("turn_"+counterAdmin+"_computer_"+computerCounter+"_VALIDATOR_"+validator)
+        counterAdmin++
+    }
+    if(people==="user" & counterAdmin % 2 ==0){
+        userCounter++
+        validator = 1
+        console.log("turn_"+counterAdmin+"_user_"+userCounter+"_VALIDATOR_"+validator)
+        counterAdmin++
+    }
+    if(counterAdmin >= 9){
+        console.log("endgame")
+        validator = 0
+        console.log("VALIDATOR"+validator)
+    }
+    //return counterAdmin
+    return validator
+}
+
+
+/* console.log(movementAdmin("computer"))
+console.log(movementAdmin("user"))
+console.log(movementAdmin("computer")) */
+
+
+// COLORS OF THE USERS && CAN NOT BE REPEATED
 
 var valuesVector = []
 var counter = 0, isrepeated = 0
@@ -308,11 +341,11 @@ function Move(user, objectClicked, name){
             }
         }
         if(isrepeated === 0){
-            valuesVector[counter] = ""+name
-            objectClicked.material.color.set('#0000ff')
-            objectClicked.material.wireframe = false
-            //console.log("added")
-            //console.log(""+objectClicked+""+valuesVector[i])
+                valuesVector[counter] = ""+name
+                objectClicked.material.color.set('#0000ff')
+                objectClicked.material.wireframe = false
+                //console.log("added")
+                //console.log(""+objectClicked+""+valuesVector[i])
         }
 
         // Prove 
@@ -336,7 +369,6 @@ function Move(user, objectClicked, name){
             console.log("added"+isrepeated)
             objectClicked.material.color.set('#00ff00')
             objectClicked.material.wireframe = false
-            //console.log(""+objectClicked+""+valuesVector[i])
         }
 
         // Prove 
@@ -346,11 +378,21 @@ function Move(user, objectClicked, name){
     }
 }
 
+//important because works outside the funcion but inside not
 Move("computer",object11,"object11")
-Move("computer",object22,"object22")
-Move("computer",object33,"object33")
+console.log(movementAdmin("computer"))
+
+/* Move("user",object12,"object12")
+console.log(movementAdmin("user"))
+
+console.log(movementAdmin("user"))
+if(movementAdmin("user")){
+    Move("user",object13,"object13")
+}
+ */
 
 
+//SENSOR ABOUT WHAT IS CLICKED TO THE USER
 window.addEventListener('click', () =>{
     if(currentIntersect){
 
@@ -358,44 +400,71 @@ window.addEventListener('click', () =>{
 
             //First Row
             case object11:
-                console.log('Object11 clicked')
-                Move("user",object11,"object11")
+                //console.log('Object11 clicked')
+                var objectMovementAdmin = movementAdmin("user")
+                if(objectMovementAdmin){
+                    Move("user",object11,"object11")
+                }
                 break
             case object12:
-                console.log('Object12 clicked')
-                Move("user",object12,"object12")
+                //console.log('Object12 clicked')
+                var objectMovementAdmin = movementAdmin("user")
+                if(objectMovementAdmin){
+                    Move("user",object12,"object12")
+                }
                 break
             case object13:
-                console.log('Object13 clicked')
-                Move("user",object13,"object13")
+                //console.log('Object13 clicked')
+                var objectMovementAdmin  = movementAdmin("user")
+                if(objectMovementAdmin){
+                    Move("user",object13,"object13")
+                }
                 break
 
             //Second Row
             case object21:
-                console.log('Object21 clicked')
-                Move("user",object21,"object21")
+                //console.log('Object21 clicked')
+                var objectMovementAdmin  = movementAdmin("user")
+                if(objectMovementAdmin){
+                    Move("user",object21,"object21")
+                }
                 break
             case object22:
-                console.log('Object22 clicked')
-                Move("user",object22,"object22")
+                //console.log('Object22 clicked')
+                var objectMovementAdmin  = movementAdmin("user")
+                if(objectMovementAdmin){
+                    Move("user",object22,"object22")
+                }
                 break
             case object23:
-                console.log('Object23 clicked')
-                Move("user",object23,"object23")
+                //console.log('Object23 clicked')
+                var objectMovementAdmin  = movementAdmin("user")
+                if(objectMovementAdmin){
+                    Move("user",object23,"object23")
+                }
                 break
 
             //Third Row
             case object31:
-                console.log('Object31 clicked')
-                Move("user",object31,"object31")
+                //console.log('Object31 clicked')
+                var objectMovementAdmin  = movementAdmin("user")
+                if(objectMovementAdmin){
+                    Move("user",object31,"object31")
+                }
                 break
             case object32:
-                console.log('Object32 clicked')
-                Move("user",object32,"object32")
+                //console.log('Object32 clicked')
+                var objectMovementAdmin  = movementAdmin("user")
+                if(objectMovementAdmin){
+                    Move("user",object32,"object32")
+                }
                 break
             case object33:
-                console.log('Object33 clicked')
-                Move("user",object33,"object33")
+                //console.log('Object33 clicked')
+                var objectMovementAdmin  = movementAdmin("user")
+                if(objectMovementAdmin){
+                    Move("user",object33,"object33")
+                }
                 break
 
             //If does not choose anything
@@ -406,26 +475,11 @@ window.addEventListener('click', () =>{
     }
 })
 
+ 
 /* if turns are necesary
 var nombre = "ss"
 function userMove(){
  console.log("han pasado 5 segundos")
  var nombre = ""
-}
-//Turns conditional
-/* let i = 0;
- 
- do {
-   i = i + 1;
-    if( i % 2 ){
-        console.log("Computer turn:"+i)
-    }
-    else{
-        console.log("User turn:"+i)
-        // important to know what object is clicked
-
-    }
- } while (i < 9); */
- 
-
+}*/
 
