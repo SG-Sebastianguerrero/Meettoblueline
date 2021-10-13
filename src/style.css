@@ -17,39 +17,3 @@ body
     left: 0;
     outline: none;
 }
-
-.mainContainer{
-    z-index: 2;
-    display: flex;
-    background-image: linear-gradient(to right, #199ee5, #4ea5e7, #6cace9, #83b3eb, #97bbec, #a8c2ee, #b8c9ef, #c6d1f1, #d6dbf3, #e4e5f6, #f0f0f8, #fbfbfb);
-    width: 100%;
-    height: 100vh;
-}
-
-.textContainer, .Hero{
-    width: 100%;
-    align-items: center;
-    margin: 0 auto;
-    display: flex;
-}
-p{
-    max-width: 400px;
-    padding: 40px 0;
-}
-.text{
-    margin: 10%;
-}
-#inputName{
-    border-radius: 10px;
-    border-color: white;
-    width: 90%;
-    text-align: center;
-    height: 20px;
-}
-#startButton{
-    background: none;
-    border: none;
-    width: 90%;
-    height: 70px;
-    text-transform: uppercase;
-}

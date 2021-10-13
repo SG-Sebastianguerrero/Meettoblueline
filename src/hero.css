@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&display=swap');
+
+.presentation{
+    background-image: linear-gradient(to right, #000000, #2b1923, #4b2c49, #61457a, #6465b2, #6465b2, #6465b2, #6465b2, #61457a, #4b2c49, #2b1923, #000000);
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template: repeat(5,1fr) / repeat(3,1fr);
+    position: absolute;
+    z-index: 2;
+    font-family: 'Carter One';
+    color: white;
+}
+
+.mainContainer{
+    z-index: 2;
+    background-image: url("../static/assets/map.svg");
+    background-position-y: center;
+    background-position-x: center;
+    grid-column: 1 / 4;
+    grid-row: 1 / 6;
+}
+
+
+
+
+.Hero{
+    grid-column: 2 / 3;
+    grid-row: 2 / 5 ;
+    background-image: url("../static/assets/heroLight.svg"); 
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    /* margin: 80px; */
+}
+
+#title{
+    grid-column: 1 / 4;
+    grid-row: 1 / 2;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    display: flex;
+}
+
+h1{
+    font-size: 60px;
+    text-align: center;
+    font-weight: 700;
+}
+
+#pContainer{
+    grid-column: 1 / 2;
+    grid-row: 2 / 5;
+    margin-right: 25px;
+    margin-left: 25px;
+    text-align: right;
+    font-size: 20px;
+}
+
+#inputContainer{
+    grid-column: 3 / 4;
+    grid-row: 3 / 4;
+}
+
+
+#pContainer, #inputContainer, #startButton, .Hero{
+    align-items: center;
+    display: flex;
+    z-index: 3;
+}
+
+#inputName{
+    margin-left: 20px;
+    margin-right: 25px;
+    border-radius: 20px;
+    border-color: transparent;
+    width: 100%;
+    text-align: center;
+    height: 40px;
+}
+#startButton{
+    grid-column: 1 / 4;
+    grid-row: 5 / 6;
+    background: none;
+    border: none;
+    width: 100%;
+    text-transform: uppercase;
+    text-align: center;
+    display: block;
+    font-size: 30px;
+    font-family: 'Carter One';
+}
+#link{
+    text-decoration: none;
+    color: white;
+}

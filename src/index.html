@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css" type="text/css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!--  <link rel="stylesheet" href="./hero.css" type="text/css">
+    <link rel="stylesheet" href="./style.css" type="text/css"> -->
     <title>Meet to Blueline</title>
 </head>
 <body>
-    <div class="mainContainer">
-        <div class="textContainer">
-            <div class="text">
-                <h1>MEET TO BLUELINE</h1> <br>
-                <p>
-                    Is <b>artificial intelligence</b> with the mission to <b>play 
+    <section class="presentation">
+        <div class="mainContainer"></div>
+        <div id="title">
+            <h1 >MEET TO BLUELINE</h1><br>
+        </div>
+        <div id="pContainer">
+            <p> Is <b>artificial intelligence</b> with the mission to <b>play 
                     with you</b> three on row in a 3D environment, each time
                     you play with it help to improve it, <b>if you can win</b> 
                     we will <b> thank you </b> at the end of the game and in 
-                    future games. 
-                </p>
-                <input type="text" id="inputName" placeholder="Write your name">
-                <button id="startButton">Press Here to Start</button>
-            </div>
+                    future games. </p>
         </div>
+            
         <div class="Hero">
-            <img src="../static/assets/hero.png" alt="blueLineIllustration">
         </div>
-    </div>
+
+        <div id="inputContainer">
+            <input type="text" id="inputName" placeholder="Write your name">
+        </div>
+
+        <button id="startButton">
+            <a id="link" href="">Press Here to Start</a>
+        </button>
+        
+    </section>
     <canvas class="webgl"></canvas>
+    <!-- <script src="script.js"></script> -->
 </body>
 </html>
