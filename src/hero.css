@@ -96,3 +96,40 @@ h1{
     text-decoration: none;
     color: white;
 }
+
+@media (max-width: 860px) {
+    #pContainer {
+        grid-column: 1 / 4;
+        grid-row: 2 / 3;
+        margin-right: 25px;
+        margin-left: 25px;
+        text-align: center;
+        font-size: 16px;
+    }
+    .Hero{
+        grid-column: 2 / 3;
+        grid-row: 3 / 5;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+    #inputContainer {
+        grid-column: 3 / 4;
+        grid-row: 3 / 5;
+    }
+    h1 {
+        font-size: 50px;
+        text-align: center;
+        font-weight: 700;
+    }
+    #inputName{
+        margin-left: 10px;
+        margin-right: 5px;
+        border-radius: 20px;
+        border-color: transparent;
+        width: 100%;
+        text-align: center;
+        height: 40px;
+    }
+}
