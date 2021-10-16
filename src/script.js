@@ -4,6 +4,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 //import * as dat from 'dat.gui'
 
+
 /**
  * Base
  */
@@ -190,7 +191,7 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.z = 3
+camera.position.z = 8
 scene.add(camera)
 
 // Controls
@@ -240,8 +241,39 @@ const objectsToTest= [object11, object12, object13,
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
-    // Important direction of raycaster
     raycaster.setFromCamera(mouse,camera)
+    //console.log(elapsedTime)
+/*     function gyro(){
+        for(var i=0; i = elapsedTime; i++){
+            console.log(elapsedTime+"I"+i)
+            camera.position.x = Math.cos(elapsedTime)*2*Math.PI
+            camera.position.z = Math.sin(elapsedTime)*2*Math.PI
+            if(elapsedTime === 8000){
+                break;
+            }
+        }
+    } */
+    
+     var start = 0, elapsedStart = 0, elapsedEnd = 5, elapsedCounter = 0
+    
+     document.getElementById("startButton").onclick = 
+        function hide(start){
+            document.getElementById('presentation').style.display='none';
+            start = 1;
+            console.log("empezo"+start)
+            elapsedStart = elapsedTime
+            elapsedEnd = elapsedStart - elapsedTime
+            elapsedCounter = elapsedCounter + elapsedEnd
+            console.log(elapsedStart)
+            console.log(elapsedEnd)
+            console.log(elapsedCounter)
+           /*  console.log(elapsedStart)
+            do{
+
+            }while(elapsedCounter < 5) */
+        } 
+    
+
 
     const intersects = raycaster.intersectObjects(objectsToTest)
 
@@ -476,11 +508,9 @@ window.addEventListener('click', () =>{
     }
 })
 
- 
-/* if turns are necesary
-var nombre = "ss"
-function userMove(){
- console.log("han pasado 5 segundos")
- var nombre = ""
-}*/
+/**
+ * Presentation
+ */
+
+
 
