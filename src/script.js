@@ -2,6 +2,7 @@ import './style.css'
 import './hero.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+
 //import * as dat from 'dat.gui'
 
 
@@ -27,7 +28,95 @@ const scene = new THREE.Scene()
 
  const material = new THREE.MeshNormalMaterial()
 
+ /**
+  * Function to change font name
+  */
+//use a function to know the type of leeter
+//can return a text that i give her text("hola")
 
+var textCounter = -1
+function fontTextCreator(textGenerated){
+    
+    textCounter ++
+
+
+
+    switch (textGenerated) { 
+        case "user": 
+            textGenerated  = "YOUR TURN"
+            break 
+
+        case "computer": 
+            textGenerated  = "COMPUTER IS THINKING"
+            break 
+
+        case "winner": 
+            textGenerated  = "YOU WIN"
+            break 
+        
+        case "draw": 
+            textGenerated  = "DRAW"
+            break 
+
+        case "lose": 
+            textGenerated  = "KEEP TRYING :)"
+            break 
+
+        default: 
+            textGenerated  = "YOUR TURN"
+    }
+
+  /**
+  * Font
+  */
+  const fontLoader = new THREE.FontLoader()
+ 
+  fontLoader.load(
+      '/fonts/helvetiker_regular.typeface.json',
+      (font) =>
+      {
+        const textGeometry = new THREE.TextBufferGeometry(
+            textGenerated, 
+             {
+                 font: font,
+                 size: 0.5,
+                 height: 0.2,
+                 curveSegments: 5, 
+                 bevelEnabled: true,
+                 bevelThickness: 0.03,
+                 bevelSize: 0.02,
+                 bevelSegments: 4
+             }    
+         )
+         //box bounding
+         textGeometry.computeBoundingBox()
+         textGeometry.translate(
+             -(textGeometry.boundingBox.max.x - 0.02) * 0.5,
+             -(textGeometry.boundingBox.max.y - 0.02) * 0.5,
+             -(textGeometry.boundingBox.max.z - 0.03) * 0.5   
+         ) 
+         
+         textGeometry.center()
+ 
+         const textMaterial = new THREE.MeshMatcapMaterial()
+         textMaterial.matcap = matcapTexture
+         //textMaterial.position.y = 1
+         //textMaterial.wireframe = true
+         //const textMaterial = new THREE.MeshBasicMaterial({ wireframe: true })
+         const text = new THREE.Mesh(textGeometry, textMaterial)
+         text.position.y = 3.5 //+ textCounter  
+         scene.add(text)
+         console.log(textGeometry)
+      } 
+  )
+  if(textCounter){
+    textGenerated = ""
+    textCounter = 0
+}
+}
+
+fontTextCreator("winner") 
+fontTextCreator("user")
 /**
  * Objects / SPHERES
  */
@@ -191,7 +280,7 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.z = 8
+camera.position.z = 10
 scene.add(camera)
 
 // Controls
@@ -243,37 +332,31 @@ const tick = () =>
     const elapsedTime = clock.getElapsedTime()
     raycaster.setFromCamera(mouse,camera)
     //console.log(elapsedTime)
-/*     function gyro(){
-        for(var i=0; i = elapsedTime; i++){
-            console.log(elapsedTime+"I"+i)
-            camera.position.x = Math.cos(elapsedTime)*2*Math.PI
-            camera.position.z = Math.sin(elapsedTime)*2*Math.PI
-            if(elapsedTime === 8000){
-                break;
-            }
-        }
-    } */
-    
-     var start = 0, elapsedStart = 0, elapsedEnd = 5, elapsedCounter = 0
-    
-     document.getElementById("startButton").onclick = 
-        function hide(start){
-            document.getElementById('presentation').style.display='none';
-            start = 1;
-            console.log("empezo"+start)
-            elapsedStart = elapsedTime
-            elapsedEnd = elapsedStart - elapsedTime
-            elapsedCounter = elapsedCounter + elapsedEnd
-            console.log(elapsedStart)
-            console.log(elapsedEnd)
-            console.log(elapsedCounter)
-           /*  console.log(elapsedStart)
-            do{
 
-            }while(elapsedCounter < 5) */
-        } 
+    /**
+    * START FUNCTIONS
+    */
+    var cicle = 0
     
+    function message() {
+        cicle++
+        //console.log("cicle"+cicle)
+        camera.position.x = Math.cos(cicle)*Math.PI*3
+        camera.position.z = Math.sin(cicle)*Math.PI*3 
+        if(cicle>=11){
+            clearInterval(interval)
+        }  
+    }
 
+    function interval() {
+        document.getElementById('presentation').style.display='none'
+        interval = setInterval(message,200)
+    }
+    document.getElementById("startButton").onclick = interval   
+            
+    /**
+     * INTERSECTS OBJECTS
+     */
 
     const intersects = raycaster.intersectObjects(objectsToTest)
 
@@ -302,8 +385,6 @@ const tick = () =>
         }
         currentIntersect = null
     }
-
-
 
     // Update controls
     controls.update()
@@ -508,9 +589,29 @@ window.addEventListener('click', () =>{
     }
 })
 
+
 /**
- * Presentation
+ * Start Function
  */
+
+/* var start = 0, elapsedStart = 0, elapsedEnd = 5, elapsedCounter = 0
+
+
+   document.getElementById("startButton").onclick = function hide(){
+   document.getElementById('presentation').style.display='none';
+   start = 1;
+   console.log("empezo"+start)
+   console.log(elapsedStart)
+   do{
+
+   }while(elapsedCounter < 5) 
+}
+console.log(start) */
+
+
+
+
+
 
 
 
