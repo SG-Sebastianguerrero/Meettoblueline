@@ -1,5 +1,6 @@
-import './style.css'
+
 import './hero.css'
+import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
@@ -24,30 +25,132 @@ const scene = new THREE.Scene()
  */
  const textureLoader = new THREE.TextureLoader()
  const matcapTexture = textureLoader.load('/textures/matcaps/8.png')
- const matcapSphereTexture = textureLoader.load('/textures/matcaps/2.png')
+ const matcapTexture2 = textureLoader.load('/textures/matcaps/7.png')
+ const matcapTexture3 = textureLoader.load('/textures/matcaps/2.png')
 
  const material = new THREE.MeshNormalMaterial()
+
+
+  /**
+  * To know if start the Game
+  */
+var start = 0
+function startGame(int = 0){
+    start = int
+    console.log("myvalueis"+start)
+    return start
+}
+
+//media query
+var mediaqueryList = window.matchMedia("(max-width: 800px)")
+
+
+
+//console.log(start)
 
  /**
   * Function to change font name
   */
-//use a function to know the type of leeter
-//can return a text that i give her text("hola")
+ 
 
-var textCounter = -1
-function fontTextCreator(textGenerated){
-    
-    textCounter ++
-
-
+function fontTextCreator(textGenerated, choose){
 
     switch (textGenerated) { 
         case "user": 
             textGenerated  = "YOUR TURN"
-            break 
+        /*
+        * User Font
+        */
+        const fontLoader = new THREE.FontLoader()
+                
+        fontLoader.load(
+            '/fonts/helvetiker_regular.typeface.json',
+            (font) =>
+            {
+                const textGeometry = new THREE.TextBufferGeometry(
+                    "YOUR TURN", 
+                    {
+                        font: font,
+                        size: 0.5,
+                        height: 0.2,
+                        curveSegments: 5, 
+                        bevelEnabled: true,
+                        bevelThickness: 0.03,
+                        bevelSize: 0.02,
+                        bevelSegments: 4
+                    }    
+                )
+                //box bounding
+                textGeometry.computeBoundingBox()
+                textGeometry.translate(
+                    -(textGeometry.boundingBox.max.x - 0.02) * 0.5,
+                    -(textGeometry.boundingBox.max.y - 0.02) * 0.5,
+                    -(textGeometry.boundingBox.max.z - 0.03) * 0.5   
+                ) 
+                
+                textGeometry.center()
+        
+                const textMaterial = new THREE.MeshMatcapMaterial()
+                if(choose){
+                    textMaterial.matcap = matcapTexture2
+                }
+                else{
+                    textMaterial.matcap = matcapTexture3
+                }
+
+                const Usertext = new THREE.Mesh(textGeometry, textMaterial)
+                Usertext.position.y = 3.5
+                scene.add(Usertext)
+                })
+
+                break 
 
         case "computer": 
             textGenerated  = "COMPUTER IS THINKING"
+            /**
+            * Computer Font
+            */
+            const ComputerfontLoader = new THREE.FontLoader()  
+            ComputerfontLoader.load(
+                '/fonts/helvetiker_regular.typeface.json',
+                (font) =>
+                {
+                    const ComputertextGeometry = new THREE.TextBufferGeometry(
+                        "COMPUTER TURN", 
+                        {
+                            font: font,
+                            size: 0.5,
+                            height: 0.2,
+                            curveSegments: 5, 
+                            bevelEnabled: true,
+                            bevelThickness: 0.03,
+                            bevelSize: 0.02,
+                            bevelSegments: 4
+                        }    
+                    )
+                    //box bounding
+                    ComputertextGeometry.computeBoundingBox()
+                    ComputertextGeometry.translate(
+                        -(ComputertextGeometry.boundingBox.max.x - 0.02) * 0.5,
+                        -(ComputertextGeometry.boundingBox.max.y - 0.02) * 0.5,
+                        -(ComputertextGeometry.boundingBox.max.z - 0.03) * 0.5   
+                    ) 
+                    
+                    ComputertextGeometry.center()
+            
+                    const ComputertextMaterial = new THREE.MeshMatcapMaterial()
+                    if(choose){
+                        ComputertextMaterial.matcap = matcapTexture2
+                    }
+                    else{
+                        ComputertextMaterial.matcap = matcapTexture3
+                    }
+
+                    const Computertext = new THREE.Mesh(ComputertextGeometry, ComputertextMaterial)
+                    Computertext.position.y = -3.5 
+                    scene.add(Computertext)
+                })
+
             break 
 
         case "winner": 
@@ -61,62 +164,10 @@ function fontTextCreator(textGenerated){
         case "lose": 
             textGenerated  = "KEEP TRYING :)"
             break 
+        }
+       
+} 
 
-        default: 
-            textGenerated  = "YOUR TURN"
-    }
-
-  /**
-  * Font
-  */
-  const fontLoader = new THREE.FontLoader()
- 
-  fontLoader.load(
-      '/fonts/helvetiker_regular.typeface.json',
-      (font) =>
-      {
-        const textGeometry = new THREE.TextBufferGeometry(
-            textGenerated, 
-             {
-                 font: font,
-                 size: 0.5,
-                 height: 0.2,
-                 curveSegments: 5, 
-                 bevelEnabled: true,
-                 bevelThickness: 0.03,
-                 bevelSize: 0.02,
-                 bevelSegments: 4
-             }    
-         )
-         //box bounding
-         textGeometry.computeBoundingBox()
-         textGeometry.translate(
-             -(textGeometry.boundingBox.max.x - 0.02) * 0.5,
-             -(textGeometry.boundingBox.max.y - 0.02) * 0.5,
-             -(textGeometry.boundingBox.max.z - 0.03) * 0.5   
-         ) 
-         
-         textGeometry.center()
- 
-         const textMaterial = new THREE.MeshMatcapMaterial()
-         textMaterial.matcap = matcapTexture
-         //textMaterial.position.y = 1
-         //textMaterial.wireframe = true
-         //const textMaterial = new THREE.MeshBasicMaterial({ wireframe: true })
-         const text = new THREE.Mesh(textGeometry, textMaterial)
-         text.position.y = 3.5 //+ textCounter  
-         scene.add(text)
-         console.log(textGeometry)
-      } 
-  )
-  if(textCounter){
-    textGenerated = ""
-    textCounter = 0
-}
-}
-
-fontTextCreator("winner") 
-fontTextCreator("user")
 /**
  * Objects / SPHERES
  */
@@ -246,34 +297,38 @@ window.addEventListener('resize', () =>
 /**
  * Full Screen
  */
- window.addEventListener('dblclick', () =>
- {
-     const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
- 
-     if(!fullscreenElement)
-     {
-         if(canvas.requestFullscreen)
-         {
-             canvas.requestFullscreen()
-         }
-         else if(canvas.webkitRequestFullscreen)
-         {
-             canvas.webkitRequestFullscreen()
-         }
-     }
-     else
-     {
-         if(document.exitFullscreen)
-         {
-             document.exitFullscreen()
-         }
-         else if(document.webkitExitFullscreen)
-         {
-             document.webkitExitFullscreen()
-         }
-     }
- })
-
+console.log("conditional"+start)
+console.log("function conditional"+startGame())
+ do{
+    window.addEventListener('dblclick', () =>
+    {
+        const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
+    
+        if(!fullscreenElement)
+        {
+            if(canvas.requestFullscreen)
+            {
+                canvas.requestFullscreen()
+            }
+            else if(canvas.webkitRequestFullscreen)
+            {
+                canvas.webkitRequestFullscreen()
+            }
+        }
+        else
+        {
+            if(document.exitFullscreen)
+            {
+                document.exitFullscreen()
+            }
+            else if(document.webkitExitFullscreen)
+            {
+                document.webkitExitFullscreen()
+            }
+        }
+    })
+    console.log("inside the function"+start)
+ }while(start === 1)
 
 /**
  * Camera
@@ -281,6 +336,7 @@ window.addEventListener('resize', () =>
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
 camera.position.z = 10
+camera.position.x = 20
 scene.add(camera)
 
 // Controls
@@ -343,7 +399,7 @@ const tick = () =>
         //console.log("cicle"+cicle)
         camera.position.x = Math.cos(cicle)*Math.PI*3
         camera.position.z = Math.sin(cicle)*Math.PI*3 
-        if(cicle>=11){
+        if(cicle>=8){
             clearInterval(interval)
         }  
     }
@@ -351,6 +407,8 @@ const tick = () =>
     function interval() {
         document.getElementById('presentation').style.display='none'
         interval = setInterval(message,200)
+        start = startGame(1)
+        console.log("Button pressed"+start)
     }
     document.getElementById("startButton").onclick = interval   
             
@@ -409,21 +467,27 @@ function movementAdmin(people){
     if(people==="computer" & counterAdmin % 2 !=0){
         computerCounter++
         validator = 1
-        console.log("turn_"+counterAdmin+"_computer_"+computerCounter+"_VALIDATOR_"+validator)
-        counterAdmin++
+
+        fontTextCreator("user",1)
+        fontTextCreator("computer",0)
+        //console.log("turn_"+counterAdmin+"_computer_"+computerCounter+"_VALIDATOR_"+validator)
+        counterAdmin++  
     }
+
     if(people==="user" & counterAdmin % 2 ==0){
         userCounter++
         validator = 1
-        console.log("turn_"+counterAdmin+"_user_"+userCounter+"_VALIDATOR_"+validator)
+        fontTextCreator("computer",1)
+        fontTextCreator("user",0)
+        //console.log("turn_"+counterAdmin+"_user_"+userCounter+"_VALIDATOR_"+validator)
         counterAdmin++
     }
+
     if(counterAdmin >= 9){
         console.log("endgame")
         validator = 0
         console.log("VALIDATOR"+validator)
     }
-    //return counterAdmin
     return validator
 }
 
@@ -480,7 +544,7 @@ function Move(user, objectClicked, name){
         }
         if(isrepeated === 0){
             valuesVector[counter] = ""+name
-            console.log("added"+isrepeated)
+            //console.log("added"+isrepeated)
             objectClicked.material.color.set('#00ff00')
             objectClicked.material.wireframe = false
         }
@@ -492,43 +556,45 @@ function Move(user, objectClicked, name){
     }
 }
 
-//important because works outside the funcion but inside not
+//Movements
 Move("computer",object11,"object11")
-console.log(movementAdmin("computer"))
+console.log(movementAdmin("computer")) 
 
-/* Move("user",object12,"object12")
-console.log(movementAdmin("user"))
+/* 
+Move("user",object12,"object12")
+console.log(movementAdmin("user")) 
 
-console.log(movementAdmin("user"))
-if(movementAdmin("user")){
-    Move("user",object13,"object13")
-}
- */
+Move("computer",object22,"object22")
+console.log(movementAdmin("computer"))  */ 
 
+/* Move("user",object32,"object32")
+console.log(movementAdmin("user"))  */
 
 //SENSOR ABOUT WHAT IS CLICKED TO THE USER
-window.addEventListener('click', () =>{
-    if(currentIntersect){
 
+var objectcounter  = 0
+window.addEventListener('click', () =>{
+
+    if(currentIntersect){
         switch(currentIntersect.object){
 
             //First Row
             case object11:
-                //console.log('Object11 clicked')
+                console.log('Object11 clicked')
                 var objectMovementAdmin = movementAdmin("user")
                 if(objectMovementAdmin){
                     Move("user",object11,"object11")
                 }
                 break
             case object12:
-                //console.log('Object12 clicked')
+                console.log('Object12 clicked')
                 var objectMovementAdmin = movementAdmin("user")
                 if(objectMovementAdmin){
                     Move("user",object12,"object12")
                 }
                 break
             case object13:
-                //console.log('Object13 clicked')
+                console.log('Object13 clicked')
                 var objectMovementAdmin  = movementAdmin("user")
                 if(objectMovementAdmin){
                     Move("user",object13,"object13")
@@ -537,17 +603,32 @@ window.addEventListener('click', () =>{
 
             //Second Row
             case object21:
-                //console.log('Object21 clicked')
+                console.log('Object21 clicked')
                 var objectMovementAdmin  = movementAdmin("user")
                 if(objectMovementAdmin){
                     Move("user",object21,"object21")
                 }
                 break
             case object22:
-                //console.log('Object22 clicked')
-                var objectMovementAdmin  = movementAdmin("user")
-                if(objectMovementAdmin){
-                    Move("user",object22,"object22")
+                console.log('Object22 clicked')
+                if(mediaqueryList.matches) {
+                    objectcounter ++
+                    alert('matches'+objectcounter);
+                    if(objectcounter >= 3){
+                        objectcounter = 0 
+                        alert('es mayor a dos'+objectcounter);
+                        var objectMovementAdmin  = movementAdmin("user")
+                        console.log(objectMovementAdmin)
+                        if(objectMovementAdmin){
+                            Move("user",object22,"object22")
+                            console.log("tried 22 an passed"+Move("user",object22,"object22"))
+                        }
+                    }
+                }else{
+                    if(objectMovementAdmin & start){
+                        Move("user",object22,"object22")
+                        console.log("tried 22 an passed"+start)
+                    }
                 }
                 break
             case object23:
@@ -590,23 +671,6 @@ window.addEventListener('click', () =>{
 })
 
 
-/**
- * Start Function
- */
-
-/* var start = 0, elapsedStart = 0, elapsedEnd = 5, elapsedCounter = 0
-
-
-   document.getElementById("startButton").onclick = function hide(){
-   document.getElementById('presentation').style.display='none';
-   start = 1;
-   console.log("empezo"+start)
-   console.log(elapsedStart)
-   do{
-
-   }while(elapsedCounter < 5) 
-}
-console.log(start) */
 
 
 
