@@ -43,7 +43,7 @@ function startGame(int = 0){
 
 //media query
 var mediaqueryList = window.matchMedia("(max-width: 800px)")
-
+var mediaqueryListDesktop = window.matchMedia("(min-width: 801px)")
 
 
 //console.log(start)
@@ -297,8 +297,7 @@ window.addEventListener('resize', () =>
 /**
  * Full Screen
  */
-console.log("conditional"+start)
-console.log("function conditional"+startGame())
+
  do{
     window.addEventListener('dblclick', () =>
     {
@@ -560,12 +559,12 @@ function Move(user, objectClicked, name){
 Move("computer",object11,"object11")
 console.log(movementAdmin("computer")) 
 
-/* 
+
 Move("user",object12,"object12")
 console.log(movementAdmin("user")) 
 
-Move("computer",object22,"object22")
-console.log(movementAdmin("computer"))  */ 
+Move("computer",object33,"object33")
+console.log(movementAdmin("computer"))   
 
 /* Move("user",object32,"object32")
 console.log(movementAdmin("user"))  */
@@ -613,19 +612,23 @@ window.addEventListener('click', () =>{
                 console.log('Object22 clicked')
                 if(mediaqueryList.matches) {
                     objectcounter ++
-                    alert('matches'+objectcounter);
-                    if(objectcounter >= 3){
+                    //alert('matches'+objectcounter);
+                    if(objectcounter >= 2){
                         objectcounter = 0 
-                        alert('es mayor a dos'+objectcounter);
+                        //alert('is bigger than 2'+objectcounter);
                         var objectMovementAdmin  = movementAdmin("user")
                         console.log(objectMovementAdmin)
                         if(objectMovementAdmin){
                             Move("user",object22,"object22")
-                            console.log("tried 22 an passed"+Move("user",object22,"object22"))
+                            //console.log("tried 22 an passed"+Move("user",object22,"object22"))
                         }
                     }
-                }else{
-                    if(objectMovementAdmin & start){
+                }
+                if(mediaqueryListDesktop.matches){
+                    alert("im inside")
+                    objectcounter = 0 
+                    var objectMovementAdmin  = movementAdmin("user")
+                    if(objectMovementAdmin){
                         Move("user",object22,"object22")
                         console.log("tried 22 an passed"+start)
                     }
