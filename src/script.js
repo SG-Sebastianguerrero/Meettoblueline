@@ -709,12 +709,12 @@ window.addEventListener('click', () =>{
     {
         const loader = new THREE.CubeTextureLoader();
         const texture = loader.load([
-            '/textures/environmentMaps/5/px.jpg',
-            '/textures/environmentMaps/5/nx.jpg',
-            '/textures/environmentMaps/5/py.jpg',
-            '/textures/environmentMaps/5/ny.jpg',
-            '/textures/environmentMaps/5/pz.jpg',
-            '/textures/environmentMaps/5/nz.jpg'
+            '/textures/environmentMaps/6/px.jpg',
+            '/textures/environmentMaps/6/nx.jpg',
+            '/textures/environmentMaps/6/py.jpg',
+            '/textures/environmentMaps/6/ny.jpg',
+            '/textures/environmentMaps/6/pz.jpg',
+            '/textures/environmentMaps/6/nz.jpg'
         ]);
         scene.background = texture;
     }
