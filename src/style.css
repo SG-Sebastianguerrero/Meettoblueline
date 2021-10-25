@@ -16,4 +16,8 @@ body
     top: 0;
     left: 0;
     outline: none;
+
+    background: url(https://threejsfundamentals.org/threejs/resources/images/daikanyama.jpg) no-repeat center center ;
+    background-size: cover;
+    display: block;
 }

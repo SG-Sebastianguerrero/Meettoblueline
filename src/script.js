@@ -6,7 +6,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 //import * as dat from 'dat.gui'
 
-
 /**
  * Base
  */
@@ -326,7 +325,7 @@ window.addEventListener('resize', () =>
             }
         }
     })
-    console.log("inside the function"+start)
+    //console.log("inside the function"+start)
  }while(start === 1)
 
 /**
@@ -625,7 +624,7 @@ window.addEventListener('click', () =>{
                     }
                 }
                 if(mediaqueryListDesktop.matches){
-                    alert("im inside")
+                    //alert("im inside")
                     objectcounter = 0 
                     var objectMovementAdmin  = movementAdmin("user")
                     if(objectMovementAdmin){
@@ -673,7 +672,70 @@ window.addEventListener('click', () =>{
     }
 })
 
+/**
+ * Background
+ */
+  
+    const fov = 75;
+    const aspect = 2;  // the canvas default
+    const near = 0.1;
+    const far = 100;
+    
+    {
+      const color = 0xFFFFFF;
+      const intensity = 1;
+      const light = new THREE.DirectionalLight(color, intensity);
+      light.position.set(-1, 2, 4);
+      scene.add(light);
+    }
+  
+    const boxWidth = 1;
+    const boxHeight = 1;
+    const boxDepth = 1;
+    const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+  
+/*     {
+      const loader = new THREE.CubeTextureLoader();
+      const texture = loader.load([
+        'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-x.jpg',
+        'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/neg-x.jpg',
+        'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-y.jpg',
+        'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/neg-y.jpg',
+        'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/pos-z.jpg',
+        'https://threejsfundamentals.org/threejs/resources/images/cubemaps/computer-history-museum/neg-z.jpg',
+      ]);
+      scene.background = texture;
+    } */
+    {
+        const loader = new THREE.CubeTextureLoader();
+        const texture = loader.load([
+            '/textures/environmentMaps/5/px.jpg',
+            '/textures/environmentMaps/5/nx.jpg',
+            '/textures/environmentMaps/5/py.jpg',
+            '/textures/environmentMaps/5/ny.jpg',
+            '/textures/environmentMaps/5/pz.jpg',
+            '/textures/environmentMaps/5/nz.jpg'
+        ]);
+        scene.background = texture;
+    }
 
+/*     {
+        const cubeTextureLoader = new THREE.CubeTextureLoader()
+
+        const environmentMapTexture = cubeTextureLoader.load([
+            '/textures/environmentMaps/5/px.jpg',
+            '/textures/environmentMaps/5/nx.jpg',
+            '/textures/environmentMaps/5/py.jpg',
+            '/textures/environmentMaps/5/ny.jpg',
+            '/textures/environmentMaps/5/pz.jpg',
+            '/textures/environmentMaps/5/nz.jpg'
+        ])
+    } */
+
+  
+    //requestAnimationFrame(render);
+
+  
 
 
 
